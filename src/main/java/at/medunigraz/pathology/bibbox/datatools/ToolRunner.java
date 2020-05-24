@@ -1,6 +1,7 @@
 package at.medunigraz.pathology.bibbox.datatools;
 
 import at.medunigraz.pathology.bibbox.datatools.mamma.MammaStarter;
+import at.medunigraz.pathology.bibbox.datatools.prostate.ExtractGleasonScoring;
 import at.medunigraz.pathology.bibbox.datatools.prostate.ExtractProstateInformation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,6 +13,7 @@ public class ToolRunner {
 
     private static boolean prostate_runner = false;
     private static boolean mamma_runner = false;
+    private static boolean prostate_gleason_runner = true;
 
     public static void main(String[] args) {
         logger.info("ToolRunner started.");
@@ -24,6 +26,14 @@ public class ToolRunner {
             logger.info("Prostate Runner disabled.");
         }
 
+        if(prostate_gleason_runner) {
+            logger.info("Prostate Gleason Runner.");
+            ExtractGleasonScoring extractGleasonScoring = new ExtractGleasonScoring();
+            extractGleasonScoring.extractGleastonScore();
+        } else {
+            logger.info("Prostate Runner Gleason disabled.");
+        }
+
         if(mamma_runner) {
             logger.info("Mamma Runner.");
             MammaStarter mammaStarter = new MammaStarter();
@@ -31,14 +41,5 @@ public class ToolRunner {
         } else {
             logger.info("Mamma Runner disabled.");
         }
-
-        String url = "http:\\/\\/searchbroker:8080\\/broker";
-
-        int endindex = url.indexOf("/", 9);
-        if(endindex == -1) {
-            endindex = url.length();
-        }
-        url = url.substring(0, endindex);
-        System.out.println(url);
     }
 }
