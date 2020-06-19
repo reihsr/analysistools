@@ -12,8 +12,8 @@ public class ToolRunner {
     private static final Logger logger = LogManager.getLogger(ToolRunner.class);
 
     private static boolean prostate_runner = false;
-    private static boolean mamma_runner = false;
-    private static boolean prostate_gleason_runner = true;
+    private static boolean mamma_runner = true;
+    private static boolean prostate_gleason_runner = false;
 
     public static void main(String[] args) {
         logger.info("ToolRunner started.");

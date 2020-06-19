@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 public class ExtractGleasonScoring {
 
-    private Integer MAX_PROSTATE_ID = 52376;//52376;
+    private Integer MAX_PROSTATE_ID = 52376;
     private Integer INCREMENT = 1000;//1000;
 
     private String pg_url = "jdbc:postgresql://localhost:5432/saat";

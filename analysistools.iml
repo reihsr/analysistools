@@ -12,6 +12,8 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: postgresql:postgresql:9.1-901-1.jdbc4" level="project" />
+    <orderEntry type="library" name="Maven: org.neo4j.driver:neo4j-java-driver:4.0.1" level="project" />
+    <orderEntry type="library" name="Maven: org.reactivestreams:reactive-streams:1.0.3" level="project" />
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-core:2.12.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.logging.log4j:log4j-api:2.12.1" level="project" />
     <orderEntry type="library" name="Maven: org.jooq:jooq:3.11.11" level="project" />

@@ -20,6 +20,7 @@
         <jooq.version>3.11.11</jooq.version>
         <junit.version>5.3.1</junit.version>
         <mockito.version>2.23.4</mockito.version>
+        <neo4j.version>4.0.1</neo4j.version>
     </properties>
 
     <dependencies>
@@ -29,6 +30,12 @@
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
             <version>${postgresql.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.neo4j.driver</groupId>
+            <artifactId>neo4j-java-driver</artifactId>
+            <version>${neo4j.version}</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core -->
