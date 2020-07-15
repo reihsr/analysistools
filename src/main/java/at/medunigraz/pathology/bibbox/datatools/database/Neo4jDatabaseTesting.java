@@ -54,14 +54,14 @@ public class Neo4jDatabaseTesting implements AutoCloseable
                 @Override
                 public String execute( Transaction tx )
                 {
-                    Result result = tx.run("MERGE (t1:Tocken {tocken: $tocken}) " +
-                            "MERGE (t2:Tocken {tocken: $tocken}) " +
-                            "MERGE (t1)-[:know {r:'123'}]->(t2) ", parameters("tocken", tocken1, "tocken", tocken2));
-                    return result.single().get(0).asString();
+                    Result result = tx.run("MERGE (t1:Tocken {tocken: $tocken1}) " +
+                            "MERGE (t2:Tocken {tocken: $tocken2}) " +
+                            "MERGE (t1)-[:followes {seperator: $seperator}]->(t2) ", parameters("tocken1", tocken1, "tocken2", tocken2, "seperator", seperator));
+                    return "";//result.single().get(0).asString();
                 }
             } );
         } catch (Exception e) {
-
+            e.printStackTrace();
         }
     }
 

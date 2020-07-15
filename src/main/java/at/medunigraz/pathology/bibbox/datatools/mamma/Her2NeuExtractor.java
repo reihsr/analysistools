@@ -25,7 +25,7 @@ public class Her2NeuExtractor {
 
     Pattern pattern = Pattern.compile("HER(CEP)?( |-)*?2( |-|/)? ?NEU", Pattern.CASE_INSENSITIVE | Pattern.MULTILINE);
 
-    Pattern pattern_tockenice = Pattern.compile("([ |:|\\\\)|\\\\(|;|,|\\\\.|/]*)");
+    Pattern pattern_tocken_seperator = Pattern.compile("([ |:|\\)|\\(|;|,|\\.|/]+)");
 
     public Her2NeuExtractor(String pg_url, String pg_user, String pg_password, Integer MAX_PROSTATE_ID, Integer INCREMENT) {
         this.MAX_PROSTATE_ID = MAX_PROSTATE_ID;
@@ -69,11 +69,11 @@ public class Her2NeuExtractor {
     private void workDiagnosisIncrement(ResultSet resultSet, Neo4jDatabaseTesting greeter) throws SQLException {
         while (resultSet.next()) {
             String diagnosis = formateDiagnosis(resultSet.getString("diagnosis"));
-            testRegex(diagnosis, greeter);
+            testRegex(diagnosis, greeter, resultSet.getInt("finding_id"));
         }
     }
 
-    private void testRegex(String diagnosis, Neo4jDatabaseTesting greeter) {
+    private void testRegex(String diagnosis, Neo4jDatabaseTesting greeter, Integer diagnosisId) {
         Matcher matcher = pattern.matcher(diagnosis);
 
         while (matcher.find()) {
@@ -85,7 +85,7 @@ public class Her2NeuExtractor {
             }
             String diagnosis_substring = diagnosis.substring(start, end);
             tockens.addAll(tockeniceString(diagnosis_substring, greeter));
-            System.out.println(diagnosis_substring);
+            System.out.println(diagnosisId + ": " + diagnosis_substring);
             System.out.println("----------------------------------");
         }
     }
@@ -98,7 +98,7 @@ public class Her2NeuExtractor {
     private Set<String> tockeniceString(String datastring, Neo4jDatabaseTesting greeter) {
         Set<String> result = new HashSet<String>();
 
-        Matcher matcher_splitt = pattern_tockenice.matcher(datastring);
+        Matcher matcher_splitt = pattern_tocken_seperator.matcher(datastring);
         int length = datastring.length();
         int start_tocken = 0;
         String tocken1 = null;
@@ -106,12 +106,13 @@ public class Her2NeuExtractor {
         String splitter = null;
         while(matcher_splitt.find()) {
             tocken2 = datastring.substring(start_tocken, matcher_splitt.start());
-            if(tocken1 == null) {
-                tocken1 = tocken2;
-            } else {
+            if(tocken1 != null) {
+                //System.out.println(tocken1 + " - " + splitter + " - " + tocken2);
                 greeter.createNodeLink(tocken1, splitter, tocken2);
             }
+            tocken1 = tocken2;
             splitter = matcher_splitt.group();
+            start_tocken = matcher_splitt.end();
         }
 
         /*for(String tocken : datastring.split("[ |:|\\)|\\(|;|,|\\.|/]")) {
