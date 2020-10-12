@@ -46,10 +46,11 @@ public class Her2NeuExtractor {
         try (Connection connection = DriverManager.getConnection(pg_url, pg_user, pg_password)) {
             try (Neo4jDatabaseTesting greeter = new Neo4jDatabaseTesting( "bolt://localhost:7687", "neo4j", "fenris" )) {
                 Statement statement = connection.createStatement();
-                for (int start_id = 0; start_id <= MAX_PROSTATE_ID; start_id += INCREMENT) {
-                    ResultSet resultSet = statement.executeQuery("SELECT rezeptor_name, token, finding_id, aura_index, patient_id, age, examination_type, examination_date, examination_number, diagnosis, diagnosis_clean, organ, organ_zuordnung, doctor, doctor_id, sender, sender_id, afterfindingcount, es_anz, source, t, n, m, g, r, l, v FROM patient_repository_saat_mamma.findings_her2neu;\n");
+                //for (int start_id = 0; start_id <= MAX_PROSTATE_ID; start_id += INCREMENT) {
+                    ResultSet resultSet = statement.executeQuery("SELECT rezeptor_name, token, finding_id, aura_index, patient_id, age, examination_type, examination_date, examination_number, diagnosis, diagnosis_clean, organ, organ_zuordnung, " +
+                            "doctor, doctor_id, sender, sender_id, afterfindingcount, es_anz, source, t, n, m, g, r, l, v FROM patient_repository_saat_mamma.findings_her2neu ORDER BY finding_id;\n");
                     workDiagnosisIncrement(resultSet, greeter);
-                }
+                //}
             } catch(Exception e) {
 
             }
@@ -77,7 +78,7 @@ public class Her2NeuExtractor {
         Matcher matcher = pattern.matcher(diagnosis);
 
         while (matcher.find()) {
-            System.out.println(matcher.group() + ": ");
+            //System.out.println(matcher.group() + ": ");
             int end = diagnosis.length();
             int start = matcher.start();
             if(start + 200 < end) {
@@ -107,6 +108,9 @@ public class Her2NeuExtractor {
         while(matcher_splitt.find()) {
             tocken2 = datastring.substring(start_tocken, matcher_splitt.start());
             if(tocken1 != null) {
+                tocken1 = tocken1.replaceAll("\n", "");
+                tocken2 = tocken2.replaceAll("\n", "");
+                splitter = splitter.replaceAll("\n", "");
                 //System.out.println(tocken1 + " - " + splitter + " - " + tocken2);
                 greeter.createNodeLink(tocken1, splitter, tocken2);
             }
