@@ -3,6 +3,7 @@ package at.medunigraz.pathology.bibbox.datatools;
 import at.medunigraz.pathology.bibbox.datatools.mamma.MammaStarter;
 import at.medunigraz.pathology.bibbox.datatools.prostate.ExtractGleasonScoring;
 import at.medunigraz.pathology.bibbox.datatools.prostate.ExtractProstateInformation;
+import at.medunigraz.pathology.bibbox.datatools.prostate.ExtractSamenblasenInvationInformation;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.jooq.Record;
@@ -12,8 +13,9 @@ public class ToolRunner {
     private static final Logger logger = LogManager.getLogger(ToolRunner.class);
 
     private static boolean prostate_runner = false;
-    private static boolean mamma_runner = true;
+    private static boolean mamma_runner = false;
     private static boolean prostate_gleason_runner = false;
+    private static boolean samenblasen_invation_runner = true;
 
     public static void main(String[] args) {
         logger.info("ToolRunner started.");
@@ -24,6 +26,14 @@ public class ToolRunner {
             extractProstateInformation.splitDiagnosis();
         } else {
             logger.info("Prostate Runner disabled.");
+        }
+
+        if(samenblasen_invation_runner) {
+            logger.info("Samenblasen Invation Runner.");
+            ExtractSamenblasenInvationInformation extractSamenblasenInvationInformation = new ExtractSamenblasenInvationInformation();
+            extractSamenblasenInvationInformation.extractInformation();
+        } else {
+            logger.info("Samenblasen Invation Runner disabled.");
         }
 
         if(prostate_gleason_runner) {

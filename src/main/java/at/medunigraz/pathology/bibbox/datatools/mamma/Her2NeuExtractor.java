@@ -44,16 +44,16 @@ public class Her2NeuExtractor {
 
     public void runHer2NeuDiscriptorExtraction() {
         try (Connection connection = DriverManager.getConnection(pg_url, pg_user, pg_password)) {
-            try (Neo4jDatabaseTesting greeter = new Neo4jDatabaseTesting( "bolt://localhost:7687", "neo4j", "fenris" )) {
+            //try (Neo4jDatabaseTesting greeter = new Neo4jDatabaseTesting( "bolt://localhost:7687", "neo4j", "fenris" )) {
                 Statement statement = connection.createStatement();
                 //for (int start_id = 0; start_id <= MAX_PROSTATE_ID; start_id += INCREMENT) {
                     ResultSet resultSet = statement.executeQuery("SELECT rezeptor_name, token, finding_id, aura_index, patient_id, age, examination_type, examination_date, examination_number, diagnosis, diagnosis_clean, organ, organ_zuordnung, " +
                             "doctor, doctor_id, sender, sender_id, afterfindingcount, es_anz, source, t, n, m, g, r, l, v FROM patient_repository_saat_mamma.findings_her2neu ORDER BY finding_id;\n");
-                    workDiagnosisIncrement(resultSet, greeter);
+                    //workDiagnosisIncrement(resultSet, greeter);
                 //}
-            } catch(Exception e) {
+            //} catch(Exception e) {
 
-            }
+            //}
         } catch (SQLException e) {
             logger.error("Connection failure.");
             System.out.println("Connection failure.");
@@ -112,7 +112,7 @@ public class Her2NeuExtractor {
                 tocken2 = tocken2.replaceAll("\n", "");
                 splitter = splitter.replaceAll("\n", "");
                 //System.out.println(tocken1 + " - " + splitter + " - " + tocken2);
-                greeter.createNodeLink(tocken1, splitter, tocken2);
+                //greeter.createNodeLink(tocken1, splitter, tocken2);
             }
             tocken1 = tocken2;
             splitter = matcher_splitt.group();

@@ -10,8 +10,9 @@ import org.neo4j.driver.TransactionWork;
 
 import static org.neo4j.driver.Values.parameters;
 
-public class Neo4jDatabaseTesting implements AutoCloseable
+public class Neo4jDatabaseTesting// implements AutoCloseable
 {
+    /*
     private final Driver driver;
 
     public Neo4jDatabaseTesting( String uri, String user, String password )
@@ -75,5 +76,5 @@ public class Neo4jDatabaseTesting implements AutoCloseable
         } catch (Exception e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }
